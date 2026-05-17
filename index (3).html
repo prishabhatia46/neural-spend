@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuralSpend — AI Finance Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">
+      Neural<span>Spend</span>
+      <sub>v2.4 · AI Finance Intelligence</sub>
+    </div>
+    <nav class="nav">
+      <div class="nav-item active"><span class="nav-icon">◈</span> Dashboard</div>
+      <div class="nav-item"><span class="nav-icon">↕</span> Transactions</div>
+      <div class="nav-item"><span class="nav-icon">◎</span> Budget</div>
+      <div class="nav-item"><span class="nav-icon">▲</span> Investments</div>
+      <div class="nav-item"><span class="nav-icon">⬡</span> Goals</div>
+      <div class="nav-item"><span class="nav-icon">◌</span> Analytics</div>
+      <div class="nav-item"><span class="nav-icon">⊹</span> Settings</div>
+    </nav>
+    <div class="ai-badge">
+      <div class="label">⬡ AI Engine</div>
+      <div class="status"><div class="pulse"></div>Model active · 3 insights</div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div>
+        <div class="page-title">Financial <span>Overview</span></div>
+        <div class="page-sub">May 2025 · AI-powered analysis active</div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-ghost" onclick="refreshData()">↻ Refresh</button>
+        <button class="btn btn-primary" onclick="runAI()">⬡ Run AI Analysis</button>
+      </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-icon">💳</div>
+        <div class="kpi-label">Total Balance</div>
+        <div class="kpi-value" id="kv1">₹1,24,580</div>
+        <div class="kpi-delta up">↑ 8.2% vs last month</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-icon">📤</div>
+        <div class="kpi-label">Monthly Spend</div>
+        <div class="kpi-value" id="kv2">₹38,240</div>
+        <div class="kpi-delta down">↑ 12.4% overspend</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-icon">📥</div>
+        <div class="kpi-label">Monthly Income</div>
+        <div class="kpi-value" id="kv3">₹72,000</div>
+        <div class="kpi-delta up">↑ 5.0% raise applied</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-icon">🎯</div>
+        <div class="kpi-label">Savings Rate</div>
+        <div class="kpi-value" id="kv4">46.9%</div>
+        <div class="kpi-delta neutral">→ Target: 50%</div>
+      </div>
+    </div>
+
+    <!-- AI Insight Banner -->
+    <div class="ai-insight">
+      <div class="ai-header">
+        <span class="ai-chip">⬡ AI</span>
+        <span class="ai-title">Anomaly Detected — Unusual Spending Pattern</span>
+      </div>
+      <div class="ai-text" id="ai-msg">
+        Your <strong>Food &amp; Dining</strong> spend increased <strong>₹4,200 (34%)</strong> this month compared to your 3-month average.
+        Based on your income of ₹72,000, you're on track to <strong>miss your ₹60,000 savings goal by ₹3,160</strong>.
+        Reducing dining spend by <strong>₹1,500/week</strong> for the next 3 weeks will bring you back on track.
+      </div>
+      <div class="ai-actions">
+        <button class="ai-btn ai-btn-p" onclick="smartSuggest()">⬡ Smart Suggestions</button>
+        <button class="ai-btn ai-btn-s">Dismiss</button>
+      </div>
+    </div>
+
+    <!-- Charts row -->
+    <div class="grid-3">
+
+      <!-- Spending Trend -->
+      <div class="card" style="animation-delay:0.25s">
+        <div class="card-title">
+          Spending Trend — 2025
+          <span class="tag">Monthly</span>
+        </div>
+        <div class="chart-bars" id="trend-chart"></div>
+      </div>
+
+      <!-- Category Donut -->
+      <div class="card" style="animation-delay:0.3s">
+        <div class="card-title">By Category <span class="tag">May</span></div>
+        <div class="donut-wrap">
+          <div class="donut">
+            <svg width="110" height="110" viewBox="0 0 110 110">
+              <circle cx="55" cy="55" r="40" fill="none" stroke="var(--surface2)" stroke-width="12"/>
+              <g id="donut-segs"></g>
+            </svg>
+            <div class="donut-center">
+              <div class="dv">₹38k</div>
+              <div class="dl">total</div>
+            </div>
+          </div>
+          <div class="donut-legend" id="donut-legend"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row -->
+    <div class="grid-2">
+
+      <!-- Recent Transactions -->
+      <div class="card" style="animation-delay:0.35s">
+        <div class="card-title">Recent Transactions <span class="tag">Live</span></div>
+        <div id="txn-list"></div>
+      </div>
+
+      <!-- Budget + Goals -->
+      <div>
+        <div class="card" style="margin-bottom:20px; animation-delay:0.4s">
+          <div class="card-title">Budget Tracker</div>
+          <div id="budget-list"></div>
+        </div>
+        <div class="card" style="animation-delay:0.45s">
+          <div class="card-title">Savings Goals</div>
+          <div id="goals-list"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
