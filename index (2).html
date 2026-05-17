@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuralSpend — AI Finance Intelligence</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">⬡</div>
+    <div>
+      <div class="logo-title">NeuralSpend</div>
+      <div class="logo-sub">v2.4 · AI Finance</div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="nav-item active" onclick="showTab('dashboard')" data-tab="dashboard">
+      <i class="fa-solid fa-gauge-high"></i> Dashboard
+    </a>
+    <a class="nav-item" onclick="showTab('transactions')" data-tab="transactions">
+      <i class="fa-solid fa-arrow-right-arrow-left"></i> Transactions
+    </a>
+    <a class="nav-item" onclick="showTab('budget')" data-tab="budget">
+      <i class="fa-solid fa-bullseye"></i> Budget
+    </a>
+    <a class="nav-item" onclick="showTab('investments')" data-tab="investments">
+      <i class="fa-solid fa-chart-line"></i> Investments
+    </a>
+    <a class="nav-item" onclick="showTab('goals')" data-tab="goals">
+      <i class="fa-solid fa-flag"></i> Goals
+    </a>
+    <a class="nav-item" onclick="showTab('analytics')" data-tab="analytics">
+      <i class="fa-solid fa-chart-pie"></i> Analytics
+    </a>
+    <a class="nav-item" onclick="showTab('settings')" data-tab="settings">
+      <i class="fa-solid fa-gear"></i> Settings
+    </a>
+  </nav>
+
+  <div class="sidebar-ai-badge">
+    <div class="ai-dot"></div>
+    <span>AI Engine · <strong>3 insights</strong></span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="main">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <button class="hamburger" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+    <div class="topbar-title" id="page-title">Financial Overview</div>
+    <div class="topbar-right">
+      <span class="month-badge">May 2025 · AI-powered</span>
+      <button class="btn-icon" onclick="refreshData()" title="Refresh"><i class="fa-solid fa-rotate-right"></i></button>
+      <button class="btn-icon btn-notify" onclick="toggleNotif()" title="Notifications">
+        <i class="fa-solid fa-bell"></i>
+        <span class="notif-dot" id="notif-dot"></span>
+      </button>
+      <div class="avatar" onclick="showTab('settings')">PS</div>
+    </div>
+  </div>
+
+  <!-- ===== DASHBOARD ===== -->
+  <div class="tab-content active" id="tab-dashboard">
+
+    <div class="ai-banner" id="ai-banner">
+      <div class="ai-banner-left">
+        <span class="ai-icon">⬡</span>
+        <div>
+          <strong>AI Anomaly Detected — Unusual Spending Pattern</strong>
+          <p>Your <em>Food &amp; Dining</em> spend increased ₹4,200 (34%) vs your 3-month average.
+          Reducing dining by ₹1,500/week for 3 weeks will bring you back on track.</p>
+        </div>
+      </div>
+      <div class="ai-banner-actions">
+        <button class="btn-small btn-primary" onclick="runAIAnalysis()">⬡ Run AI Analysis</button>
+        <button class="btn-small btn-ghost" onclick="dismissBanner()">Dismiss</button>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card" onclick="openModal('Total Balance','Your total balance across all accounts is ₹1,24,580. This is up 8.2% from last month (₹1,15,120). <br><br><strong>Savings Account:</strong> ₹84,580<br><strong>Current Account:</strong> ₹30,000<br><strong>FD:</strong> ₹10,000')">
+        <div class="kpi-icon kpi-blue"><i class="fa-solid fa-credit-card"></i></div>
+        <div class="kpi-info">
+          <div class="kpi-label">Total Balance</div>
+          <div class="kpi-value" id="kpi-balance">₹1,24,580</div>
+          <div class="kpi-change positive"><i class="fa-solid fa-arrow-up"></i> 8.2% vs last month</div>
+        </div>
+      </div>
+      <div class="kpi-card" onclick="openModal('Monthly Spend','You have spent ₹38,240 this month — 12.4% over your planned budget of ₹34,000.<br><br><strong>Top categories:</strong><br>🍕 Food &amp; Dining: ₹12,400<br>🛍️ Shopping: ₹9,800<br>🚗 Transport: ₹6,200<br>🎬 Entertainment: ₹4,840<br>💊 Health: ₹5,000')">
+        <div class="kpi-icon kpi-red"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+        <div class="kpi-info">
+          <div class="kpi-label">Monthly Spend</div>
+          <div class="kpi-value" id="kpi-spend">₹38,240</div>
+          <div class="kpi-change negative"><i class="fa-solid fa-arrow-up"></i> 12.4% overspend</div>
+        </div>
+      </div>
+      <div class="kpi-card" onclick="openModal('Monthly Income','Your salary from Cognizant has been credited: ₹72,000.<br><br><strong>Breakdown:</strong><br>💼 Basic Salary: ₹52,000<br>🏠 HRA: ₹10,000<br>🚗 Conveyance: ₹5,000<br>📊 Special Allowance: ₹5,000<br><br>This includes a 5% raise applied from April.')">
+        <div class="kpi-icon kpi-green"><i class="fa-solid fa-arrow-down-to-bracket"></i></div>
+        <div class="kpi-info">
+          <div class="kpi-label">Monthly Income</div>
+          <div class="kpi-value" id="kpi-income">₹72,000</div>
+          <div class="kpi-change positive"><i class="fa-solid fa-arrow-up"></i> 5.0% raise applied</div>
+        </div>
+      </div>
+      <div class="kpi-card" onclick="openModal('Savings Rate','You are saving 46.9% of your income this month — just 3.1% short of your 50% target.<br><br><strong>Saved:</strong> ₹33,760<br><strong>Target:</strong> ₹36,000<br><strong>Gap:</strong> ₹2,240<br><br>💡 Tip: Cut dining out once a week to close the gap.')">
+        <div class="kpi-icon kpi-purple"><i class="fa-solid fa-piggy-bank"></i></div>
+        <div class="kpi-info">
+          <div class="kpi-label">Savings Rate</div>
+          <div class="kpi-value" id="kpi-savings">46.9%</div>
+          <div class="kpi-change neutral"><i class="fa-solid fa-arrow-right"></i> Target: 50%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+      <div class="card">
+        <div class="card-header">
+          <span>Spending Trend — 2025</span>
+          <div class="card-header-actions">
+            <button class="btn-xs" onclick="chartToggle('bar')" id="btn-bar">Bar</button>
+            <button class="btn-xs active" onclick="chartToggle('line')" id="btn-line">Line</button>
+          </div>
+        </div>
+        <canvas id="spendChart" height="180"></canvas>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span>By Category — May</span>
+          <span class="badge-teal">₹38k total</span>
+        </div>
+        <canvas id="categoryChart" height="180"></canvas>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+      <div class="card">
+        <div class="card-header">
+          <span>Recent Transactions</span>
+          <button class="btn-link" onclick="showTab('transactions')">View All →</button>
+        </div>
+        <div id="recent-txns"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span>Budget Tracker</span>
+          <button class="btn-link" onclick="showTab('budget')">Manage →</button>
+        </div>
+        <div id="budget-preview"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TRANSACTIONS ===== -->
+  <div class="tab-content" id="tab-transactions">
+    <div class="card">
+      <div class="card-header">
+        <span>All Transactions</span>
+        <div class="card-header-actions">
+          <input class="search-input" type="text" id="txn-search" placeholder="🔍 Search..." oninput="filterTxns()" />
+          <select class="select-input" id="txn-filter" onchange="filterTxns()">
+            <option value="all">All Categories</option>
+            <option value="Food">Food</option>
+            <option value="Salary">Salary</option>
+            <option value="Transport">Transport</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Health">Health</option>
+          </select>
+        </div>
+      </div>
+      <div id="all-txns-list"></div>
+    </div>
+  </div>
+
+  <!-- ===== BUDGET ===== -->
+  <div class="tab-content" id="tab-budget">
+    <div class="dash-grid">
+      <div class="card">
+        <div class="card-header"><span>Budget Overview</span><span class="badge-teal">May 2025</span></div>
+        <div id="budget-full"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span>Budget Distribution</span></div>
+        <canvas id="budgetPieChart" height="220"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== INVESTMENTS ===== -->
+  <div class="tab-content" id="tab-investments">
+    <div class="kpi-grid">
+      <div class="kpi-card" onclick="openModal('Portfolio Value','Your total investment portfolio is valued at ₹3,42,000 — up 14.2% YTD.<br><br><strong>Allocation:</strong><br>📈 Stocks: ₹2,12,600 (62%)<br>📊 Mutual Funds: ₹1,29,400 (38%)')">
+        <div class="kpi-icon kpi-blue"><i class="fa-solid fa-briefcase"></i></div>
+        <div class="kpi-info">
+          <div class="kpi-label">Portfolio Value</div>
+          <div class="kpi-value">₹3,42,000</div>
+          <div class="kpi-change positive"><i class="fa-solid fa-arrow-up"></i> 14.2% YTD</div>
+        </div>
+      </div>
+      <div class="kpi-card" onclick="openModal('Cognizant (CTSH)','You hold 12 shares of Cognizant Technology Solutions at an avg price of ₹9,060.<br><br><strong>Current Price:</strong> ₹9,867<br><strong>Gain:</strong> +₹9,684 (+8.9%)<br><strong>Sector:</strong> IT Services')">
+        <div class="kpi-icon kpi-green"><i class="fa-solid fa-building"></i></div>
+        <div class="kpi-info">
+          <div class="kpi-label">Cognizant (CTSH)</div>
+          <div class="kpi-value">₹1,18,400</div>
+          <div class="kpi-change positive"><i class="fa-solid fa-arrow-up"></i> 8.9% gain</div>
+        </div>
+      </div>
+      <div class="kpi-card" onclick="openModal('TCS','You hold 2 shares of TCS at avg price of ₹3,610.<br><br><strong>Current Price:</strong> ₹3,535<br><strong>Loss:</strong> -₹150 (-2.1%)<br><strong>Sector:</strong> IT Services')">
+        <div class="kpi-icon kpi-purple"><i class="fa-solid fa-microchip"></i></div>
+        <div class="kpi-info">
+          <div class="kpi-label">TCS</div>
+          <div class="kpi-value">₹94,200</div>
+          <div class="kpi-change negative"><i class="fa-solid fa-arrow-down"></i> 2.1% this month</div>
+        </div>
+      </div>
+      <div class="kpi-card" onclick="openModal('Mutual Funds','SIP investments across 3 funds.<br><br><strong>Mirae Asset Large Cap:</strong> ₹54,200 (+21%)<br><strong>Parag Parikh Flexi Cap:</strong> ₹42,100 (+17%)<br><strong>Axis Midcap:</strong> ₹33,100 (+15%)')">
+        <div class="kpi-icon kpi-red"><i class="fa-solid fa-chart-line"></i></div>
+        <div class="kpi-info">
+          <div class="kpi-label">Mutual Funds</div>
+          <div class="kpi-value">₹1,29,400</div>
+          <div class="kpi-change positive"><i class="fa-solid fa-arrow-up"></i> 18.6% YTD</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:1.5rem">
+      <div class="card-header"><span>Portfolio Trend — 2025</span></div>
+      <canvas id="investChart" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- ===== GOALS ===== -->
+  <div class="tab-content" id="tab-goals">
+    <div class="goals-grid" id="goals-grid"></div>
+    <div style="text-align:center;margin-top:1.5rem">
+      <button class="btn-primary-lg" onclick="addGoalPrompt()"><i class="fa-solid fa-plus"></i> Add New Goal</button>
+    </div>
+  </div>
+
+  <!-- ===== ANALYTICS ===== -->
+  <div class="tab-content" id="tab-analytics">
+    <div class="dash-grid">
+      <div class="card">
+        <div class="card-header"><span>Monthly Spend Comparison</span></div>
+        <canvas id="analyticsBar" height="200"></canvas>
+      </div>
+      <div class="card">
+        <div class="card-header"><span>Income vs Spend</span></div>
+        <canvas id="analyticsLine" height="200"></canvas>
+      </div>
+    </div>
+    <div class="card" style="margin-top:1.5rem">
+      <div class="card-header"><span>AI Smart Suggestions</span><span class="badge-teal">3 active</span></div>
+      <div class="suggestions-list" id="suggestions-list"></div>
+    </div>
+  </div>
+
+  <!-- ===== SETTINGS ===== -->
+  <div class="tab-content" id="tab-settings">
+    <div class="settings-grid">
+      <div class="card">
+        <div class="card-header"><span>Profile</span></div>
+        <div class="profile-section">
+          <div class="profile-avatar">PS</div>
+          <div>
+            <div class="profile-name">Prisha Bhatia</div>
+            <div class="profile-company"><i class="fa-solid fa-building"></i> Cognizant Technology Solutions</div>
+            <div class="profile-role">Senior Software Engineer · Pune</div>
+          </div>
+        </div>
+        <div class="settings-fields">
+          <div class="field-row">
+            <label>Email</label>
+            <input type="email" value="prisha.bhatia@cognizant.com" class="field-input" />
+          </div>
+          <div class="field-row">
+            <label>Phone</label>
+            <input type="text" value="+91 98765 43210" class="field-input" />
+          </div>
+          <div class="field-row">
+            <label>Currency</label>
+            <select class="field-input">
+              <option selected>INR (₹)</option>
+              <option>USD ($)</option>
+              <option>EUR (€)</option>
+            </select>
+          </div>
+          <button class="btn-primary-lg" style="margin-top:1rem" onclick="showToast('✅ Profile saved successfully!')">Save Changes</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span>Preferences</span></div>
+        <div class="pref-list">
+          <div class="pref-row">
+            <div>
+              <div class="pref-title">Dark Mode</div>
+              <div class="pref-sub">Switch to dark theme</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="dark-toggle" onchange="toggleDark(this)" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="pref-row">
+            <div>
+              <div class="pref-title">AI Alerts</div>
+              <div class="pref-sub">Anomaly detection notifications</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked onchange="showToast('🤖 AI alerts preference updated!')" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="pref-row">
+            <div>
+              <div class="pref-title">Weekly Report</div>
+              <div class="pref-sub">Email summary every Monday</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked onchange="showToast('📧 Weekly report preference saved!')" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="pref-row">
+            <div>
+              <div class="pref-title">Budget Alerts</div>
+              <div class="pref-sub">Alert when 80% budget used</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked onchange="showToast('🎯 Budget alert preference saved!')" />
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end .main -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span id="modal-title"></span>
+      <button onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- NOTIFICATION PANEL -->
+<div class="notif-panel" id="notif-panel">
+  <div class="notif-header">
+    Notifications
+    <button onclick="toggleNotif()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="notif-item unread" onclick="notifClick(this,'Overspend Alert','Food & Dining exceeded budget by ₹2,400 this month.')">
+    <div class="notif-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+    <div><strong>Overspend Alert</strong><br/>Food &amp; Dining exceeded budget by ₹2,400</div>
+  </div>
+  <div class="notif-item unread" onclick="notifClick(this,'Salary Credited','₹72,000 received from Cognizant Technology Solutions on 1 May 2025.')">
+    <div class="notif-icon green"><i class="fa-solid fa-circle-check"></i></div>
+    <div><strong>Salary Credited</strong><br/>₹72,000 received from Cognizant</div>
+  </div>
+  <div class="notif-item" onclick="notifClick(this,'Investment Update','CTSH (Cognizant) is up 8.9% this month. Your holding is currently valued at ₹1,18,400.')">
+    <div class="notif-icon blue"><i class="fa-solid fa-chart-line"></i></div>
+    <div><strong>Investment Update</strong><br/>CTSH up 8.9% this month</div>
+  </div>
+  <div class="notif-item" onclick="notifClick(this,'AI Insight','Based on your spending patterns, you can save ₹4,500 more this month by reducing dining out and subscriptions.')">
+    <div class="notif-icon purple"><i class="fa-solid fa-robot"></i></div>
+    <div><strong>AI Insight</strong><br/>You can save ₹4,500 more this month</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
